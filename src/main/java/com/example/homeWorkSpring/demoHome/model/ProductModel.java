@@ -1,15 +1,16 @@
-package com.example.homeWorkSpring.demoHome.Model;
+package com.example.homeWorkSpring.demoHome.model;
 
 public class ProductModel {
     String name;
-    long id;
-    double price;
+    Long id;
+    Double price;
 
-    public ProductModel(String name, long id, double price) {
+    public ProductModel(Long id,String name,  Double price) {
         this.name = name;
         this.id = id;
         this.price = price;
     }
+
 
     public ProductModel(String name) {
         this.name = name;
