@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class ProductSevice {
     private ProductCommand productCommand;
-    private ProductRepository productRepository;
+    private ProductRepository  productRepository;
 
     public ProductSevice(ProductCommand productCommand) {
         this.productCommand = productCommand;
