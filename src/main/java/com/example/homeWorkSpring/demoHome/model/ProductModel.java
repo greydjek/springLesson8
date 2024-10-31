@@ -1,16 +1,31 @@
 package com.example.homeWorkSpring.demoHome.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Product")
 public class ProductModel {
-    String name;
+    @Id
+    @Column(name = "idProduct")
+    @GenericGenerator(name = "generator" ,strategy = "increment")
+    @GeneratedValue(generator = "generator")
+
     Long id;
+@Column(name = "price", nullable = false, scale = 2)
     Double price;
+@Column(name = "product_name", nullable = false)
+    String name;
 
-    public ProductModel(Long id,String name,  Double price) {
-        this.name = name;
-        this.id = id;
-        this.price = price;
+    @Override
+    public String toString() {
+        return "ProductModel{" +
+                "id=" + id +
+                ", price=" + price +
+                ", name='" + name + '\'' +
+                '}';
     }
-
 
     public ProductModel(String name) {
         this.name = name;

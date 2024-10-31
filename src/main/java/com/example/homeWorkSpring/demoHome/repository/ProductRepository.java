@@ -9,20 +9,20 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+
 public class ProductRepository {
     LinkedList<ProductModel> productModels = new LinkedList<>();
 List<ProductModel> lproductModels;
-    @PostConstruct
-    void init() {
-        lproductModels = List.of(
-                new ProductModel(1L, "sugar", 45.55D),
-                new ProductModel(2L, "bread", 30.55D),
-                new ProductModel(3L, "water", 45.55D),
-                new ProductModel(4L, "apple", 45.55D)
-        );
-    productModels.addAll(lproductModels);
-    }
+//    @PostConstruct
+//    void init() {
+//        lproductModels = List.of(
+//                new ProductModel(1L, "sugar", 45.55D),
+//                new ProductModel(2L, "bread", 30.55D),
+//                new ProductModel(3L, "water", 45.55D),
+//                new ProductModel(4L, "apple", 45.55D)
+//        );
+//    productModels.addAll(lproductModels);
+//    }
 
     public LinkedList<ProductModel> getAllProducts() {
         return productModels ;
