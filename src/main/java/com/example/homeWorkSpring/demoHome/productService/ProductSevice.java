@@ -2,20 +2,45 @@ package com.example.homeWorkSpring.demoHome.productService;
 
 import com.example.homeWorkSpring.demoHome.model.ProductModel;
 import com.example.homeWorkSpring.demoHome.repository.ProductCommand;
-import com.example.homeWorkSpring.demoHome.repository.ProductRepository;
-import org.springframework.stereotype.Service;
+import org.hibernate.Session;
+
 
 import java.util.List;
-@Service
-public class ProductSevice {
-    private ProductCommand productCommand;
-    private ProductRepository  productRepository;
+public class ProductSevice implements ProductCommand {
 
-    public ProductSevice(ProductCommand productCommand) {
-        this.productCommand = productCommand;
+private SessionFactoryUtils sessionFactoryUtils;
+    public ProductSevice() {
+
+    }
+
+    public ProductSevice(SessionFactoryUtils sessionFactoryUtils) {
+        this.sessionFactoryUtils = sessionFactoryUtils;
     }
 
     public void saveProduct(ProductModel productModel){
-        productCommand.save(productModel);
+    }
+
+    @Override
+    public ProductModel findById(Long id) {
+try (Session session = sessionFactoryUtils.getSession()){
+session.beginTransaction();
+ProductModel productModel =session.get(ProductModel.class, id);
+session.getTransaction().commit();
+    System.out.println(productModel.toString());
+    return productModel;
+}
+    }
+
+    @Override
+    public ProductModel findByName(String name) {
+try (Session session = sessionFactoryUtils.getSession()){
+    session.beginTransaction();
+ProductModel productModel = session.createQuery("select pr from Products where pr.name = :name", ProductModel.class)
+        .setParameter("name" , name)
+        .getSingleResult();
+session.getTransaction().commit();
+return productModel;
+
+}
     }
 }
