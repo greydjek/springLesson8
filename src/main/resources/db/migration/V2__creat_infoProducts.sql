@@ -1,0 +1,1 @@
+create table if not exists infoAboutProduct (id bigserial primary key, name VARCHAR(255), weight DOUBLE, days INTEGER)

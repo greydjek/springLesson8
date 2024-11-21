@@ -14,9 +14,18 @@
 
 <body>
 
-<div class="container" ng-controller="indexController">
+<div class="container" ng-controller="ProductController">
+    <h2>Сортировка товара</h2>
+    <form novalidate ng-submit="filterNewPrice()">
+        <input class="form-control" type="number" placeholder="минимальная стоимость" ng-model="newPrice.min">
+        <p></p>
+        <input class="form-control" type="number" placeholder="максимальная стомость" ng-model="newPrice.max">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Выполнить сортировку</button>
+    </form>
+    <p></p>
     <h3>Список товаров</h3>
-    <table class="table table-hover" cellpadding="0" cellspacing="0">
+    <table class="table table-hover">
         <tr>
             <td>ID</td>
             <td>Название товара</td>
@@ -25,18 +34,17 @@
 
         </tr>
         <tbody>
-        <tr ng-repeat="p in Products">
+        <tr ng-repeat = "p in Products">
             <td>{{p.id}}</td>
             <td>{{p.name}}</td>
-            <td>
-                <button class="btn btn-primary" ng-click="changePrice(p.id, -5 )">-</button>
+                  <td type="number" id="num" step="0.01" onblur="this.value = parseFloat(this.value).toFixed(2)" >
+                <button class="btn btn-primary" ng-click="changePrice(p.id, -1 )">-</button>
                 {{p.price}}
-                <button class="btn btn-primary" ng-click="changePrice(p.id, 5)">+</button>
+                <button class="btn btn-primary" ng-click="changePrice(p.id, 1)">+</button>
             </td>
             <td>
             <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
             </td>
-
         </tr>
         </tbody>
     </table>

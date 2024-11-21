@@ -1,6 +1,7 @@
-package com.example.homeWorkSpring.demoHome.model;
+package com.example.homeWorkSpring.demoHome.entity;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "infoAboutProduct")
@@ -18,20 +19,20 @@ public class InfoAboutProduct {
 
     @Column(name = "expirationDataDays")
     private Integer expirationDataDays;
-
-    @OneToOne(mappedBy = "productKey")
-    private ProductModel productModel;
+//
+//    @OneToOne(mappedBy = "productKey")
+//    private ProductModel productModel;
 
     public InfoAboutProduct() {
     }
-
-    public ProductModel getProductModel() {
-        return productModel;
-    }
-
-    public void setProductModel(ProductModel productModel) {
-        this.productModel = productModel;
-    }
+//
+//    public ProductModel getProductModel() {
+//        return productModel;
+//    }
+//
+//    public void setProductModel(ProductModel productModel) {
+//        this.productModel = productModel;
+//    }
 
     @Override
     public String toString() {

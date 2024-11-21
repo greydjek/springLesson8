@@ -1,9 +1,7 @@
-package com.example.homeWorkSpring.demoHome.model;
+package com.example.homeWorkSpring.demoHome.entity;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -12,16 +10,17 @@ public class ProductModel {
     @Column(name = "id")
     @GenericGenerator(name = "generator" ,strategy = "increment")
     @GeneratedValue(generator = "generator")
-
     Long id;
-@Column(name = "price", nullable = false, scale = 2)
-    Double price;
-@Column(name = "name", nullable = false)
+
+    @Column(name = "name", nullable = false)
     String name;
 
-    @OneToOne
-    @JoinColumn(name = "productKey")
-    private InfoAboutProduct productKey;
+    @Column(name = "price", nullable = false, scale = 2)
+    Double price;
+
+//    @OneToOne
+//    @JoinColumn(name = "productKey")
+//    private InfoAboutProduct productKey;
 
     @Override
     public String toString() {
@@ -35,13 +34,13 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public InfoAboutProduct getProductKey() {
-        return productKey;
-    }
-
-    public void setProductKey(InfoAboutProduct productKey) {
-        this.productKey = productKey;
-    }
+//    public InfoAboutProduct getProductKey() {
+//        return productKey;
+//    }
+//
+//    public void setProductKey(InfoAboutProduct productKey) {
+//        this.productKey = productKey;
+//    }
 
     public void setId(Long id) {
         this.id = id;
@@ -62,8 +61,9 @@ public class ProductModel {
         this.id = id;
     }
 
-    public void setPrice(double price) {
+    public double setPrice(double price) {
         this.price = price;
+        return price;
     }
 
     public String getName() {

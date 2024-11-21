@@ -1,5 +1,5 @@
-angular.module('app', []).controller('indexController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8089/app';
+angular.module('app', []).controller('ProductController', function ($scope, $http) {
+    const contextPath = 'http://localhost:8189/app';
 
     $scope.loadProducts = function () {
         $http.get(contextPath + '/products')
@@ -7,6 +7,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             console.log(response);
                 $scope.Products = response.data;
             });
+
     };
 
     $scope.changePrice = function(id, delta){
@@ -21,6 +22,19 @@ delta: delta
         $scope.loadProducts();
       });
     }
-
-    $scope.loadProducts();
+    $scope.filterNewPrice = function(){
+   console.log($scope.newPrice)
+    $http( {
+url:contextPath + '/products/filterNewPrice',
+method: 'GET',
+params:{
+min: $scope.newPrice.min,
+max: $scope.newPrice.max
+}
+}).then(function (response){
+console.log(response);
+$scope.Products = response.data;
+      });
+    }
+$scope.loadProducts();
 });
