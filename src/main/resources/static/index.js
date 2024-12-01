@@ -1,11 +1,11 @@
 angular.module('app', []).controller('ProductController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8189/app';
+    const contextPath = 'http://localhost:8189/app/api/v1';
 
     $scope.loadProducts = function () {
         $http.get(contextPath + '/products')
             .then(function (response) {
             console.log(response);
-                $scope.Products = response.data;
+                $scope.Products = response.data.content;
             });
 
     };

@@ -43,4 +43,9 @@ public class ProductSevice {
         ProductModel productModel = productCommand.findById(id).orElseThrow(() -> new RuntimeException("this product not find"));
         productModel.setPrice(productModel.getPrice() + delta);
     }
+
+    public ProductModel saveProduct(ProductModel productModel) {
+    productCommand.save(productModel);
+        return productModel;
+    }
 }
