@@ -1,40 +1,52 @@
 angular.module('app', []).controller('ProductController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/app/api/v1';
 
-    $scope.loadProducts = function () {
-        $http.get(contextPath + '/products')
+//    $scope.loadProducts = function () {
+//        $http.get(contextPath + '/products')
+//            .then(function (response) {
+//            console.log(response);
+//                $scope.Products = response.data;
+//            });
+               $scope.loadProducts = function (pageIndex = 1) {
+                    $http({
+                        url: contextPath + '/products',
+                        method: 'GET',
+                        params: {
+                            title_part: $scope.filter ? $scope.filter.title_part : null,
+                            min_price: $scope.filter ? $scope.filter.min_price : null,
+                            max_price: $scope.filter ? $scope.filter.max_price : null
+                        }
+                    }).then(function (response) {
+                    console.log(response);
+                        $scope.ProductsPage = response.data;
+                    });
+                };
+
+
+    $scope.productsInCart = function () {
+        $http.get(contextPath + '/productsInCart')
             .then(function (response) {
             console.log(response);
-                $scope.Products = response.data.content;
+                $scope.ProductsInCart = response.data;
             });
 
     };
 
-    $scope.changePrice = function(id, delta){
-    $http( {
-url:contextPath + '/products/changePrice',
-method: 'GET',
-params:{
-id: id,
-delta: delta
-}
-}).then(function (response){
-        $scope.loadProducts();
-      });
-    }
-    $scope.filterNewPrice = function(){
-   console.log($scope.newPrice)
-    $http( {
-url:contextPath + '/products/filterNewPrice',
-method: 'GET',
-params:{
-min: $scope.newPrice.min,
-max: $scope.newPrice.max
-}
-}).then(function (response){
-console.log(response);
-$scope.Products = response.data;
-      });
-    }
+    $scope.deleteProductInCart = function (id) {
+        $http.get(contextPath + '/deleteProductInCart/')
+            .then(function (response) {
+            console.log(response);
+                $scope.ProductsInCart = response.data;
+            });
+
+    };
+ $scope.addProductInCart = function (id) {
+        $http.get(contextPath + '/addProductInCart/' + id)
+            .then(function (response) {
+            console.log(response);
+                $scope.ProductsInCart = response.data;
+            });
+
+    };
 $scope.loadProducts();
 });

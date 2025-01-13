@@ -1,5 +1,6 @@
 package com.example.homeWorkSpring.demoHome.entity;
 
+import com.example.homeWorkSpring.demoHome.dto.DtoProducts;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,15 +34,10 @@ public class ProductModel {
 
     public ProductModel() {
     }
-
-//    public InfoAboutProduct getProductKey() {
-//        return productKey;
-//    }
-//
-//    public void setProductKey(InfoAboutProduct productKey) {
-//        this.productKey = productKey;
-//    }
-
+public ProductModel(DtoProducts dtoProducts){
+        this.name = dtoProducts.getName();
+        this.price = dtoProducts.getPrice();
+}
     public void setId(Long id) {
         this.id = id;
     }

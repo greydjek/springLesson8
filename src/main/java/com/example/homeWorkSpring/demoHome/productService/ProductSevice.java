@@ -1,26 +1,26 @@
 package com.example.homeWorkSpring.demoHome.productService;
 
+import com.example.homeWorkSpring.demoHome.dto.DtoProducts;
 import com.example.homeWorkSpring.demoHome.entity.ProductModel;
 import com.example.homeWorkSpring.demoHome.repository.ProductCommand;
+import com.example.homeWorkSpring.demoHome.repository.ProductModelSpecification;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
+import java.lang.module.FindException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductSevice {
 
-    private ProductCommand productCommand;
-
-    public ProductSevice(ProductCommand productCommand) {
-        this.productCommand = productCommand;
-    }
+    private final ProductCommand productCommand;
 
     public List<ProductModel> allProducts() {
         return productCommand.findAll();
@@ -37,15 +37,29 @@ public class ProductSevice {
     public List<ProductModel> filterNewPrice(Double min, Double max) {
         return productCommand.findAllByPriceBetween(min, max);
     }
+    public Page<ProductModel> findAll(Double maxPrice, Double minPrice, String namePart, Integer page){
+        Specification<ProductModel> specification = Specification.where(null);
+        if(maxPrice!= null){
+            specification = specification.and(ProductModelSpecification.priceGreaterThanOrEqualTo(maxPrice));
+        }if(minPrice!= null){
+            specification = specification.and(ProductModelSpecification.priceLessThanOrEqualTo(minPrice));
+        }if(maxPrice!= null){
+            specification = specification.and(ProductModelSpecification.nameLike(namePart));
+        }
 
-    @Transactional
-    public void changePrice(Long id, Integer delta) {
-        ProductModel productModel = productCommand.findById(id).orElseThrow(() -> new RuntimeException("this product not find"));
-        productModel.setPrice(productModel.getPrice() + delta);
+        return productCommand.findAll(specification, PageRequest.of(page -1, 5));
     }
+
 
     public ProductModel saveProduct(ProductModel productModel) {
     productCommand.save(productModel);
         return productModel;
+    }
+    @Transactional
+public ProductModel update(DtoProducts dtoProducts){
+ProductModel productModel =  productCommand.findById(dtoProducts.getId()).orElseThrow(()-> new FindException("не нaйден в базе"+ dtoProducts.getId()));
+productModel.setPrice(dtoProducts.getPrice());
+        productModel.setName(dtoProducts.getName());
+    return productModel;
     }
 }

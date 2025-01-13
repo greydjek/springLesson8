@@ -1,33 +1,20 @@
 package com.example.homeWorkSpring.demoHome.dto;
 
 import com.example.homeWorkSpring.demoHome.entity.ProductModel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DtoProducts {
-    String name;
-    double price;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    private String name;
+    private double price;
+    private Long id;
 
     public DtoProducts(ProductModel productModel) {
-        name = productModel.getName();
-    price = productModel.getPrice();
-    }
-
-    public DtoProducts(){
-
+        this.name = productModel.getName();
+        this.price = productModel.getPrice();
     }
 }
