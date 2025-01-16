@@ -4,6 +4,7 @@ import com.example.homeWorkSpring.demoHome.convector.Convector;
 import com.example.homeWorkSpring.demoHome.dto.DtoProducts;
 import com.example.homeWorkSpring.demoHome.entity.ProductModel;
 import com.example.homeWorkSpring.demoHome.productService.ProductSevice;
+import com.example.homeWorkSpring.demoHome.productsCart.Cart;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,17 +16,14 @@ import java.util.stream.Stream;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/api/v1")
 public class ProductController {
-    private final ProductSevice productSevice;
-    private final Convector convector;
-    private List<DtoProducts> listProductsInCart;
+    public final ProductSevice productSevice;
+    public final Convector convector;
+    public final Cart cart;
 
-    @GetMapping
-//    public  List<ProductModel> allProducts(){
-//    return     productSevice.allProducts();
-//    }
-    public Page<DtoProducts> allProducts(
+    @GetMapping("/products")
+      public Page<DtoProducts> allProducts(
             @RequestParam(name = "p", defaultValue = "1") Integer page,
             @RequestParam(name = "max_price", required = false) Double maxPrice,
             @RequestParam(name = "min_price", required = false) Double minPrice,
@@ -36,23 +34,18 @@ public class ProductController {
         return productSevice.findAll(maxPrice, minPrice, namePart, page).map(p -> convector.entityToDto(p));
     }
 
-    @GetMapping("/cart")
-    public Stream<DtoProducts> shoppingCart() {
-        return productSevice.allProducts().stream().map(DtoProducts::new);
-    }
-
-    @GetMapping("/addProductInCart/")
+    @GetMapping("/addProductInCart/{id}")
     public void addProductInCart(@PathVariable Long id) {
-        log.info(" передан параметр " + id );
-        DtoProducts dtoproduct = (DtoProducts) findById(id);
-        listProductsInCart.add(dtoproduct);
+        log.info(" передан параметр " + id);
+        cart.addDtoProductsInCart(id);
+
     }
 
     @GetMapping("/productsInCart")
     public List<DtoProducts> productsInCart() {
-List<DtoProducts> list = (List<DtoProducts>) productSevice.allProducts().stream().map(p -> convector.entityToDto(p));
-return list;
-        }
+        return cart.getAllDtoProductsInCart();
+
+    }
 
     @PostMapping
     public ProductModel saveNewProduct(@RequestBody ProductModel productModel) {
@@ -60,7 +53,7 @@ return list;
     }
 
     @GetMapping("/{id}")
-    public Object findById(@PathVariable Long id) {
+     public Object findById(@PathVariable Long id) {
         return productSevice.findById(id).map(s -> new DtoProducts(s));
     }
 

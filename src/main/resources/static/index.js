@@ -28,20 +28,23 @@ angular.module('app', []).controller('ProductController', function ($scope, $htt
             .then(function (response) {
             console.log(response);
                 $scope.ProductsInCart = response.data;
+
+            });
+
+    };
+ $scope.addProductInCart = function (id) {
+ console.log(id)
+        $http.get(contextPath + '/addProductInCart/' + id)
+            .then(function (response) {
+            console.log(response);
+                $scope.ProductsInCart();
+
             });
 
     };
 
     $scope.deleteProductInCart = function (id) {
-        $http.get(contextPath + '/deleteProductInCart/')
-            .then(function (response) {
-            console.log(response);
-                $scope.ProductsInCart = response.data;
-            });
-
-    };
- $scope.addProductInCart = function (id) {
-        $http.get(contextPath + '/addProductInCart/' + id)
+        $http.get(contextPath + '/deleteProductInCart/' + id)
             .then(function (response) {
             console.log(response);
                 $scope.ProductsInCart = response.data;

@@ -22,8 +22,8 @@ public class ProductSevice {
 
     private final ProductCommand productCommand;
 
-    public List<ProductModel> allProducts() {
-        return productCommand.findAll();
+    public Page<ProductModel> allProducts(Integer p) {
+        return productCommand.findAll(PageRequest.of(-1,10));
     }
 
     public Optional<ProductModel> findById(Long id) {
@@ -49,7 +49,6 @@ public class ProductSevice {
 
         return productCommand.findAll(specification, PageRequest.of(page -1, 5));
     }
-
 
     public ProductModel saveProduct(ProductModel productModel) {
     productCommand.save(productModel);
