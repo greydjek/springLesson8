@@ -37,9 +37,8 @@ angular.module('app', []).controller('ProductController', function ($scope, $htt
         $http.get(contextPath + '/addProductInCart/' + id)
             .then(function (response) {
             console.log(response);
-                $scope.ProductsInCart();
-
-            });
+            $scope.productsInCart();
+                  });
 
     };
 
@@ -47,9 +46,10 @@ angular.module('app', []).controller('ProductController', function ($scope, $htt
         $http.get(contextPath + '/deleteProductInCart/' + id)
             .then(function (response) {
             console.log(response);
-                $scope.ProductsInCart = response.data;
+                $scope.productsInCart();
             });
 
     };
 $scope.loadProducts();
+
 });

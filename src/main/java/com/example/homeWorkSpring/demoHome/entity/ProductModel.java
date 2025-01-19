@@ -2,75 +2,32 @@ package com.example.homeWorkSpring.demoHome.entity;
 
 import com.example.homeWorkSpring.demoHome.dto.DtoProducts;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+@Setter
+@Getter
 @Entity
-@Table(name = "products")
+@Table(name = "product_model")
 public class ProductModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @GenericGenerator(name = "generator" ,strategy = "increment")
-    @GeneratedValue(generator = "generator")
     Long id;
-
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     String name;
-
-    @Column(name = "price", nullable = false, scale = 2)
+    @Column(name = "price")
     Double price;
-
-//    @OneToOne
-//    @JoinColumn(name = "productKey")
-//    private InfoAboutProduct productKey;
-
-    @Override
-    public String toString() {
-        return "ProductModel{" +
-                "id=" + id +
-                ", price=" + price +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    @Column(name = "info")
+    String info;
 
     public ProductModel() {
     }
-public ProductModel(DtoProducts dtoProducts){
+
+    public ProductModel(DtoProducts dtoProducts) {
         this.name = dtoProducts.getName();
         this.price = dtoProducts.getPrice();
-}
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public double setPrice(double price) {
-        this.price = price;
-        return price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public double getPrice() {
-        return price;
     }
 }

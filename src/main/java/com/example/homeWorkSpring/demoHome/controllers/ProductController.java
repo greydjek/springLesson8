@@ -44,9 +44,12 @@ public class ProductController {
     @GetMapping("/productsInCart")
     public List<DtoProducts> productsInCart() {
         return cart.getAllDtoProductsInCart();
-
     }
 
+    @GetMapping("/deleteProductInCart/{id}")
+    public void deleteProductInCart(@PathVariable Long id){
+        cart.deleteProductInCart(id);
+    }
     @PostMapping
     public ProductModel saveNewProduct(@RequestBody ProductModel productModel) {
         return productSevice.saveProduct(productModel);

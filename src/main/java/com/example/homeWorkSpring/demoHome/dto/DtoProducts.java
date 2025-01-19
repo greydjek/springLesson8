@@ -11,11 +11,12 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class DtoProducts {
     private String name;
-    private double price;
+    private Double price;
     private Long id;
 
     public DtoProducts(ProductModel productModel) {
         this.name = productModel.getName();
         this.price = productModel.getPrice();
+        this.id = productModel.getId();
     }
 }
