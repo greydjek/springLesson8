@@ -20,8 +20,7 @@ public class ProductModel {
     String name;
     @Column(name = "price")
     Double price;
-    @Column(name = "info")
-    String info;
+
 
     public ProductModel() {
     }
